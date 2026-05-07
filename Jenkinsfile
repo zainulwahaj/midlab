@@ -16,12 +16,11 @@ pipeline {
           stage('Train Model') {
               steps {
                   sh '''
-                      rm -rf .venv
-                      python3 -m venv .venv
-                      . .venv/bin/activate
-                      pip install --upgrade pip
-                      pip install -r requirements.txt
-                      python train.py
+                      docker run --rm \
+                        -v "$PWD":/app \
+                        -w /app \
+                        python:3.11-slim \
+                        sh -c "pip install --no-cache-dir -r requirements.txt && python train.py"
                   '''
               }
           }
