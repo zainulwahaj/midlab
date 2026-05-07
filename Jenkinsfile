@@ -16,6 +16,7 @@ pipeline {
           stage('Train Model') {
               steps {
                   sh '''
+                      rm -rf .venv
                       python3 -m venv .venv
                       . .venv/bin/activate
                       pip install --upgrade pip
